@@ -1,0 +1,72 @@
+/* ── Reset & Variables ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --verde:     #0a5c36;
+  --verde-mid: #0d7a47;
+  --verde-luz: #1aad63;
+  --oro:       #f5c518;
+  --oro-dark:  #c99a05;
+  --blanco:    #f9f6ef;
+  --gris:      #e2ddd4;
+  --oscuro:    #0b1a12;
+  --rojo:      #e63030;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'Rajdhani', sans-serif;
+  --radius:    8px;
+  --shadow:    0 8px 32px rgba(0,0,0,0.4);
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: var(--font-body);
+  background: var(--oscuro);
+  color: var(--blanco);
+  overflow-x: hidden;
+}
+
+/* ── Fondo animado ─────────────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.015) 60px,
+      rgba(255,255,255,0.015) 61px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.015) 60px,
+      rgba(255,255,255,0.015) 61px
+    ),
+    radial-gradient(ellipse at 20% 50%, #0d3d22 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, #1a5c35 0%, transparent 50%),
+    linear-gradient(160deg, #071510 0%, #0b2018 50%, #061209 100%);
+  pointer-events: none;
+}
+
+#root { position: relative; z-index: 1; }
+
+/* ── Utilidades ────────────────────────────────────────────────────────── */
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  outline: none;
+}
+
+input {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--oscuro); }
+::-webkit-scrollbar-thumb { background: var(--verde-mid); border-radius: 3px; }

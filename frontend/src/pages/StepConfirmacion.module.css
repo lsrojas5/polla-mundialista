@@ -1,0 +1,108 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.card {
+  background: linear-gradient(160deg, rgba(10,60,35,0.9) 0%, rgba(6,20,12,0.95) 100%);
+  border: 1px solid rgba(245,197,24,0.4);
+  border-radius: 16px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 80px rgba(245,197,24,0.08);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  animation: boom 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+
+@keyframes boom {
+  from { opacity:0; transform: scale(0.85); }
+  to   { opacity:1; transform: scale(1); }
+}
+
+.confetti {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  animation: bounce 1s ease-in-out infinite alternate;
+  letter-spacing: 4px;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-8px); }
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  letter-spacing: 3px;
+  color: var(--oro);
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 30px rgba(245,197,24,0.4);
+}
+
+.msg {
+  color: rgba(255,255,255,0.75);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.msg strong { color: var(--blanco); font-size: 1.1rem; }
+
+.imgWrap {
+  border: 2px solid rgba(245,197,24,0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+.img {
+  width: 100%;
+  display: block;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btnDownload {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.85rem 1.5rem;
+  background: linear-gradient(135deg, var(--oro) 0%, var(--oro-dark) 100%);
+  color: var(--oscuro);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(245,197,24,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btnDownload:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(245,197,24,0.5);
+}
+
+.btnReset {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.85rem 1.5rem;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius);
+  color: rgba(255,255,255,0.7);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btnReset:hover { border-color: var(--blanco); color: var(--blanco); }
