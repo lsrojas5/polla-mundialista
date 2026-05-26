@@ -2,25 +2,30 @@ import { useState } from "react";
 import styles from "./StepDatos.module.css";
 
 const FIELDS = [
-  { key: "nombre",   label: "Nombre completo",  type: "text",  placeholder: "Ej: Carlos Gómez", icon: "👤" },
-  { key: "cedula",   label: "Cédula",            type: "text",  placeholder: "Ej: 1020304050",   icon: "🪪" },
-  { key: "telefono", label: "Teléfono",          type: "tel",   placeholder: "Ej: 3001234567",   icon: "📱" },
-  { key: "correo",   label: "Correo electrónico",type: "email", placeholder: "Ej: carlos@mail.com", icon: "✉️" },
-  { key: "factura",  label: "Número de factura", type: "text",  placeholder: "Ej: FAC-2024-001", icon: "🧾" },
+  { key: "nombre", label: "Nombre completo", type: "text", placeholder: "Ej: Carlos Gómez", icon: "👤" },
+  { key: "cedula", label: "Cédula", type: "text", placeholder: "Ej: 1020304050", icon: "🪪" },
+  { key: "telefono", label: "Teléfono", type: "tel", placeholder: "Ej: 3001234567", icon: "📱" },
+  { key: "correo", label: "Correo electrónico", type: "email", placeholder: "Ej: carlos@mail.com", icon: "✉️" },
+  { key: "factura", label: "Número de factura", type: "text", placeholder: "Ej: FAC-2024-001", icon: "🧾" },
 ];
 
 export default function StepDatos({ datos, onNext }) {
-  const [form, setForm]     = useState(datos);
+  const [form, setForm] = useState(datos);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
   const validate = (f) => {
     const e = {};
-    if (!f.nombre.trim())                       e.nombre   = "El nombre es obligatorio";
-    if (!f.cedula.trim())                       e.cedula   = "La cédula es obligatoria";
-    if (!f.telefono.trim())                     e.telefono = "El teléfono es obligatorio";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo)) e.correo = "Correo no válido";
-    if (!f.factura.trim())                      e.factura  = "El número de factura es obligatorio";
+    if (!f.nombre.trim()) e.nombre = "El nombre es obligatorio";
+    if (!f.cedula.trim()) e.cedula = "La cédula es obligatoria";
+    if (!f.telefono.trim()) e.telefono = "El teléfono es obligatorio";
+    if (
+      f.correo.trim() &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo)
+    ) {
+      e.correo = "Correo no válido";
+    }
+    if (!f.factura.trim()) e.factura = "El número de factura es obligatorio";
     return e;
   };
 
@@ -36,7 +41,12 @@ export default function StepDatos({ datos, onNext }) {
   };
 
   const handleSubmit = () => {
-    setTouched({ nombre:1,cedula:1,telefono:1,correo:1,factura:1 });
+    setTouched({
+      nombre: 1,
+      cedula: 1,
+      telefono: 1,
+      factura: 1
+    });
     const e = validate(form);
     setErrors(e);
     if (Object.keys(e).length === 0) onNext(form);

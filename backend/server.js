@@ -19,30 +19,35 @@ mongoose
 const pronosticoSchema = new mongoose.Schema(
   {
     // Paso 1 – datos personales
-    nombre:    { type: String, required: true, trim: true },
-    cedula:    { type: String, required: true, trim: true },
-    telefono:  { type: String, required: true, trim: true },
-    correo:    { type: String, required: true, trim: true, lowercase: true },
-    factura:   { type: String, required: true, trim: true },
+    nombre: { type: String, required: true, trim: true },
+    cedula: { type: String, required: true, trim: true },
+    telefono: { type: String, required: true, trim: true },
+    correo: { type: String, trim: true, lowercase: true, default: "" },
+    factura: {
+      type: String,
+      required: true,
+      trim: true,
+      unique: true,
+    },
 
     // Paso 2 – marcadores
     semifinal1: {
       equipo1: { type: String, required: true },
-      goles1:  { type: Number, required: true, min: 0 },
+      goles1: { type: Number, required: true, min: 0 },
       equipo2: { type: String, required: true },
-      goles2:  { type: Number, required: true, min: 0 },
+      goles2: { type: Number, required: true, min: 0 },
     },
     semifinal2: {
       equipo1: { type: String, required: true },
-      goles1:  { type: Number, required: true, min: 0 },
+      goles1: { type: Number, required: true, min: 0 },
       equipo2: { type: String, required: true },
-      goles2:  { type: Number, required: true, min: 0 },
+      goles2: { type: Number, required: true, min: 0 },
     },
     final: {
       equipo1: { type: String, required: true },
-      goles1:  { type: Number, required: true, min: 0 },
+      goles1: { type: Number, required: true, min: 0 },
       equipo2: { type: String, required: true },
-      goles2:  { type: Number, required: true, min: 0 },
+      goles2: { type: Number, required: true, min: 0 },
     },
   },
   { timestamps: true }
@@ -54,16 +59,51 @@ const Pronostico = mongoose.model("Pronostico", pronosticoSchema);
 
 // POST  /api/pronosticos  – guardar pronóstico completo
 app.post("/api/pronosticos", async (req, res) => {
-  try {
-    const doc = new Pronostico(req.body);
-    await doc.save();
-    res.status(201).json({ success: true, id: doc._id });
-  } catch (err) {
-    console.error(err);
-    res.status(400).json({ success: false, error: err.message });
-  }
-});
 
+  try {
+
+    // NORMALIZAR FACTURA
+    const factura = req.body.factura.trim().toUpperCase();
+
+    // VALIDAR SI YA EXISTE
+    const existeFactura = await Pronostico.findOne({
+      factura
+    });
+
+    if (existeFactura) {
+
+      return res.status(400).json({
+        success: false,
+        error: "❌ Esta factura ya registró un pronóstico"
+      });
+      
+    }
+
+    // CREAR DOCUMENTO
+    const doc = new Pronostico({
+      ...req.body,
+      factura
+    });
+
+    await doc.save();
+
+    res.status(201).json({
+      success: true,
+      id: doc._id
+    });
+
+  } catch (err) {
+
+    console.error(err);
+
+    res.status(400).json({
+      success: false,
+      error: err.message
+    });
+
+  }
+
+});
 // GET  /api/pronosticos  – listar todos (útil para admin)
 app.get("/api/pronosticos", async (req, res) => {
   try {
