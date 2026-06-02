@@ -209,15 +209,23 @@
 
 @media (max-width: 520px) {
 
+  .header {
+    padding: 1rem 0.75rem;
+  }
+
   .title {
-    font-size: 1.8rem;
+    font-size: 1.55rem;
     line-height: 1.2;
+    padding-left: 45px;
+    padding-right: 10px;
   }
 
   .sub {
     letter-spacing: 1px;
     line-height: 1.4;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
+    padding-left: 45px;
+    padding-right: 10px;
   }
 
   .label {
@@ -239,10 +247,10 @@
   }
 
   .adminButton {
-    width: 38px;
-    height: 38px;
-    top: 12px;
-    left: 12px;
-    font-size: 1.1rem;
+    width: 34px;
+    height: 34px;
+    top: 10px;
+    left: 10px;
+    font-size: 1rem;
   }
 }
