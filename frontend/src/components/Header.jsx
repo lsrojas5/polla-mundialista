@@ -3,11 +3,20 @@ import logoAgsm from "../assets/logo-agsm.png";
 
 const STEPS = ["Tus Datos", "Pronósticos", "¡Listo!"];
 
-export default function Header({ step }) {
+export default function Header({ step, onAdminClick }) {
 
   return (
 
     <header className={styles.header}>
+
+      {/* BOTON ADMIN */}
+      <button
+        className={styles.adminButton}
+        onClick={onAdminClick}
+        title="Administrador"
+      >
+        ☰
+      </button>
 
       {/* HEADER PRINCIPAL */}
       <div className={styles.brand}>
@@ -62,11 +71,13 @@ export default function Header({ step }) {
               )}
 
             </div>
+
           );
         })}
 
       </nav>
 
     </header>
+
   );
 }

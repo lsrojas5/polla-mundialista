@@ -5,6 +5,7 @@ import StepMarcadores from "./pages/StepMarcadores.jsx";
 import StepConfirmacion from "./pages/StepConfirmacion.jsx";
 
 import Header from "./components/Header.jsx";
+import AdminModal from "./components/AdminModal.jsx";
 
 const initialDatos = {
   nombre: "",
@@ -48,7 +49,11 @@ export default function App() {
 
   const [submitData, setSubmitData] =
     useState(null);
+  const [showAdmin, setShowAdmin] =
+    useState(false);
 
+  const [adminLogged, setAdminLogged] =
+    useState(false);
   // API URL Railway
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -128,7 +133,24 @@ export default function App() {
     setStep(1);
 
   };
+  // Login administrador
+  const handleAdminLogin = (password) => {
 
+    if (password === "AGSM2026") {
+
+      setAdminLogged(true);
+
+      setShowAdmin(false);
+
+      alert("Acceso concedido");
+
+    } else {
+
+      alert("Contraseña incorrecta");
+
+    }
+
+  };
   return (
 
     <div
@@ -140,7 +162,10 @@ export default function App() {
     >
 
       {/* HEADER */}
-      <Header step={step} />
+      <Header
+        step={step}
+        onAdminClick={() => setShowAdmin(true)}
+      />
 
       {/* CONTENIDO */}
       <main
@@ -176,6 +201,11 @@ export default function App() {
         )}
 
       </main>
+      <AdminModal
+        isOpen={showAdmin}
+        onClose={() => setShowAdmin(false)}
+        onLogin={handleAdminLogin}
+      />
 
     </div>
 

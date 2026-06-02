@@ -76,7 +76,7 @@ app.post("/api/pronosticos", async (req, res) => {
         success: false,
         error: "❌ Esta factura ya registró un pronóstico"
       });
-      
+
     }
 
     // CREAR DOCUMENTO
@@ -113,7 +113,45 @@ app.get("/api/pronosticos", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// EXPORTAR PARTICIPANTES JSON
 
+app.get("/api/admin/export", async (req, res) => {
+
+  try {
+
+    const participantes = await Pronostico
+      .find()
+      .sort({ createdAt: -1 })
+      .lean();
+
+    res.download = undefined;
+
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=participantes.json"
+    );
+
+    res.setHeader(
+      "Content-Type",
+      "application/json; charset=utf-8"
+    );
+
+    return res.send(
+      JSON.stringify(participantes, null, 2)
+    );
+
+  } catch (err) {
+
+    console.error("Error exportando participantes:", err);
+
+    return res.status(500).json({
+      success: false,
+      error: err.message
+    });
+
+  }
+
+});
 // Health check
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
