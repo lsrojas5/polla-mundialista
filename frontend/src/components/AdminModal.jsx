@@ -3,19 +3,36 @@ import styles from "./AdminModal.module.css";
 
 export default function AdminModal({
   isOpen,
-  onClose,
-  onLogin
+  onClose
 }) {
 
   const [password, setPassword] = useState("");
+  const [logged, setLogged] = useState(false);
+
+  const ADMIN_PASSWORD = "AGSM2026";
 
   if (!isOpen) return null;
 
-  const handleSubmit = () => {
+  const handleLogin = () => {
 
-    onLogin(password);
+    if (password === ADMIN_PASSWORD) {
 
-    setPassword("");
+      setLogged(true);
+
+    } else {
+
+      alert("Contraseña incorrecta");
+
+    }
+
+  };
+
+  const handleDownload = () => {
+
+    window.open(
+      "https://polla-mundialista-production-3177.up.railway.app/api/admin/export",
+      "_blank"
+    );
 
   };
 
@@ -25,35 +42,69 @@ export default function AdminModal({
 
       <div className={styles.modal}>
 
-        <h2 className={styles.title}>
-          🔒 Acceso Administrador
-        </h2>
+        {!logged ? (
 
-        <input
-          type="password"
-          placeholder="Ingrese contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.input}
-        />
+          <>
 
-        <div className={styles.buttons}>
+            <h2 className={styles.title}>
+              🔒 Acceso Administrador
+            </h2>
 
-          <button
-            className={styles.btnCancel}
-            onClick={onClose}
-          >
-            Cancelar
-          </button>
+            <input
+              type="password"
+              placeholder="Ingrese contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+            />
 
-          <button
-            className={styles.btnLogin}
-            onClick={handleSubmit}
-          >
-            Ingresar
-          </button>
+            <div className={styles.buttons}>
 
-        </div>
+              <button
+                className={styles.btnCancel}
+                onClick={onClose}
+              >
+                Cancelar
+              </button>
+
+              <button
+                className={styles.btnLogin}
+                onClick={handleLogin}
+              >
+                Ingresar
+              </button>
+
+            </div>
+
+          </>
+
+        ) : (
+
+          <>
+
+            <h2 className={styles.title}>
+              ✅ Acceso concedido
+            </h2>
+
+            <button
+              className={styles.btnLogin}
+              onClick={handleDownload}
+            >
+              📥 Descargar participantes.json
+            </button>
+
+            <br />
+
+            <button
+              className={styles.btnCancel}
+              onClick={onClose}
+            >
+              Cerrar
+            </button>
+
+          </>
+
+        )}
 
       </div>
 
