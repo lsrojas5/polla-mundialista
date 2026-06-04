@@ -9,31 +9,32 @@ export default function Header({ step, onAdminClick }) {
 
     <header className={styles.header}>
 
-      {/* BOTON ADMIN */}
-      <button
-        className={styles.adminButton}
-        onClick={onAdminClick}
-        title="Administrador"
-      >
-        ☰
-      </button>
+      {/* BARRA SUPERIOR */}
+      <div className={styles.topBar}>
+
+        <button
+          className={styles.adminButton}
+          onClick={onAdminClick}
+          title="Administrador"
+        >
+          ☰
+        </button>
+
+      </div>
 
       {/* HEADER PRINCIPAL */}
       <div className={styles.brand}>
 
-        {/* TITULO */}
         <h1 className={styles.title}>
           ¡Polla Mundialista AGSM!
         </h1>
 
-        {/* LOGO */}
         <img
           src={logoAgsm}
           alt="Logo AGSM"
           className={styles.logoBottom}
         />
 
-        {/* SUBTITULO */}
         <p className={styles.sub}>
           Ingresa tu pronóstico y cultiva la victoria 🌱
         </p>
@@ -53,9 +54,9 @@ export default function Header({ step, onAdminClick }) {
 
             <div
               key={num}
-              className={`${styles.step} ${
-                active ? styles.active : ""
-              } ${done ? styles.done : ""}`}
+              className={`${styles.step}
+                ${active ? styles.active : ""}
+                ${done ? styles.done : ""}`}
             >
 
               <div className={styles.circle}>
@@ -73,6 +74,7 @@ export default function Header({ step, onAdminClick }) {
             </div>
 
           );
+
         })}
 
       </nav>
@@ -80,4 +82,5 @@ export default function Header({ step, onAdminClick }) {
     </header>
 
   );
+
 }

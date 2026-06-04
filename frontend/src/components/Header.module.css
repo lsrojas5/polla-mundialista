@@ -10,16 +10,19 @@
   width: 100%;
   overflow: hidden;
   box-sizing: border-box;
-  position: relative;
+}
+
+/* TOP BAR */
+
+.topBar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
 }
 
 /* BOTON ADMIN */
 
 .adminButton {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-
   width: 42px;
   height: 42px;
 
@@ -42,8 +45,6 @@
   backdrop-filter: blur(10px);
 
   transition: all 0.25s ease;
-
-  z-index: 100;
 }
 
 .adminButton:hover {
@@ -209,23 +210,16 @@
 
 @media (max-width: 520px) {
 
-  .header {
-    padding: 1rem 0.75rem;
-  }
-
   .title {
-    font-size: 1.55rem;
+    font-size: 1.8rem;
     line-height: 1.2;
-    padding-left: 45px;
-    padding-right: 10px;
+    letter-spacing: 2px;
   }
 
   .sub {
+    font-size: 0.75rem;
     letter-spacing: 1px;
     line-height: 1.4;
-    font-size: 0.72rem;
-    padding-left: 45px;
-    padding-right: 10px;
   }
 
   .label {
@@ -249,8 +243,6 @@
   .adminButton {
     width: 34px;
     height: 34px;
-    top: 10px;
-    left: 10px;
     font-size: 1rem;
   }
 }
