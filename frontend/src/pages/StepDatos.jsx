@@ -14,11 +14,17 @@ export default function StepDatos({ datos, onNext }) {
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
+  const onlyDigits = (value) => value.replace(/\D/g, "");
+
   const validate = (f) => {
     const e = {};
     if (!f.nombre.trim()) e.nombre = "El nombre es obligatorio";
     if (!f.cedula.trim()) e.cedula = "La cédula es obligatoria";
-    if (!f.telefono.trim()) e.telefono = "El teléfono es obligatorio";
+    if (!f.telefono.trim()) {
+      e.telefono = "El teléfono es obligatorio";
+    } else if (!/^\d{10}$/.test(f.telefono)) {
+      e.telefono = "El teléfono debe tener exactamente 10 dígitos";
+    }
     if (
       f.correo.trim() &&
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.correo)
@@ -30,7 +36,10 @@ export default function StepDatos({ datos, onNext }) {
   };
 
   const handleChange = (key, val) => {
-    const next = { ...form, [key]: val };
+    const next = {
+      ...form,
+      [key]: key === "telefono" || key === "cedula" ? onlyDigits(val) : val,
+    };
     setForm(next);
     if (touched[key]) setErrors(validate(next));
   };
@@ -70,6 +79,8 @@ export default function StepDatos({ datos, onNext }) {
               type={type}
               value={form[key]}
               placeholder={placeholder}
+              inputMode={key === "telefono" || key === "cedula" ? "numeric" : undefined}
+              maxLength={key === "telefono" ? 10 : undefined}
               onChange={(e) => handleChange(key, e.target.value)}
               onBlur={() => handleBlur(key)}
               className={styles.input}

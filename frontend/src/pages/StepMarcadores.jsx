@@ -1,16 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./StepMarcadores.module.css";
 
 // Lista de selecciones del Mundial 2026
 const EQUIPOS = [
   "Argentina","Brasil","Francia","España","Alemania","Inglaterra","Portugal",
-  "Países Bajos","Bélgica","Italia","Uruguay","Colombia","México","Estados Unidos",
+  "Países Bajos","Bélgica","Uruguay","Colombia","México","Estados Unidos",
   "Canadá","Marruecos","Senegal","Japón","Corea del Sur","Australia","Croacia",
-  "Suiza","Polonia","Ecuador","Qatar","Arabia Saudita","Ghana","Camerún",
-  "Túnez","Serbia","Dinamarca","Gales",
+  "Suiza","Ecuador","Qatar","Arabia Saudita","Ghana","Camerún",
+  "Túnez","Dinamarca",
 ];
 
-function MatchCard({ label, partido, onChange, emoji }) {
+function MatchCard({ label, partido, onChange, emoji, options = EQUIPOS }) {
   return (
     <div className={styles.matchCard}>
       <div className={styles.matchLabel}>
@@ -25,7 +25,7 @@ function MatchCard({ label, partido, onChange, emoji }) {
             onChange={(e) => onChange("equipo1", e.target.value)}
             className={styles.select}
           >
-            {EQUIPOS.map((eq) => <option key={eq}>{eq}</option>)}
+            {options.map((eq) => <option key={eq}>{eq}</option>)}
           </select>
         </div>
 
@@ -49,7 +49,7 @@ function MatchCard({ label, partido, onChange, emoji }) {
             onChange={(e) => onChange("equipo2", e.target.value)}
             className={`${styles.select} ${styles.selectRight}`}
           >
-            {EQUIPOS.map((eq) => <option key={eq}>{eq}</option>)}
+            {options.map((eq) => <option key={eq}>{eq}</option>)}
           </select>
         </div>
       </div>
@@ -60,6 +60,37 @@ function MatchCard({ label, partido, onChange, emoji }) {
 export default function StepMarcadores({ marcadores, onBack, onSubmit }) {
   const [form, setForm] = useState(marcadores);
   const [loading, setLoading] = useState(false);
+
+  const finalOptions = Array.from(
+    new Set([
+      form.semifinal1.equipo1,
+      form.semifinal1.equipo2,
+      form.semifinal2.equipo1,
+      form.semifinal2.equipo2,
+    ])
+  );
+
+  useEffect(() => {
+    if (finalOptions.length < 2) return;
+
+    setForm((current) => {
+      const allowed = finalOptions;
+      const final = current.final;
+
+      if (allowed.includes(final.equipo1) && allowed.includes(final.equipo2)) {
+        return current;
+      }
+
+      return {
+        ...current,
+        final: {
+          ...final,
+          equipo1: allowed[0],
+          equipo2: allowed[1] ?? allowed[0],
+        },
+      };
+    });
+  }, [finalOptions]);
 
   const update = (partido, key, val) =>
     setForm((f) => ({ ...f, [partido]: { ...f[partido], [key]: val } }));
@@ -99,6 +130,7 @@ export default function StepMarcadores({ marcadores, onBack, onSubmit }) {
           emoji="🏆"
           partido={form.final}
           onChange={(k, v) => update("final", k, v)}
+          options={finalOptions.length > 0 ? finalOptions : EQUIPOS}
         />
       </div>
 

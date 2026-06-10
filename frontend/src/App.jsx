@@ -55,7 +55,7 @@ export default function App() {
   const [adminLogged, setAdminLogged] =
     useState(false);
   // API URL Railway
-  const API_URL = import.meta.env.VITE_API_URL;
+  const API_URL = import.meta.env.VITE_API_URL || "";
 
   // Paso 1 → Paso 2
   const handleDatosNext = (d) => {
@@ -82,14 +82,18 @@ export default function App() {
         `${API_URL}/api/pronosticos`,
         {
           method: "POST",
-
           headers: {
             "Content-Type": "application/json",
           },
-
           body: JSON.stringify(payload),
         }
       );
+
+      if (!res.ok) {
+        throw new Error(
+          `Error ${res.status}: ${res.statusText}`
+        );
+      }
 
       const json = await res.json();
 
@@ -174,7 +178,7 @@ export default function App() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: "2rem 1rem",
+          padding: "2rem 1rem 4.5rem",
         }}
       >
 
@@ -201,6 +205,25 @@ export default function App() {
         )}
 
       </main>
+
+      <footer
+        aria-hidden="true"
+        style={{
+          padding: "0.5rem 1rem 1rem",
+          textAlign: "center",
+          pointerEvents: "none",
+          fontFamily: "var(--font-display)",
+          fontSize: "0.9rem",
+          letterSpacing: "0.18rem",
+          color: "rgba(245, 197, 24, 0.16)",
+          textShadow: "0 0 10px rgba(245, 197, 24, 0.08)",
+          userSelect: "none",
+          lineHeight: 1,
+        }}
+      >
+        🌱 Agroinsumos San Miguel SAS 🌱
+      </footer>
+
       <AdminModal
         isOpen={showAdmin}
         onClose={() => setShowAdmin(false)}
