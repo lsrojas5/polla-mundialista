@@ -15,11 +15,20 @@ export default function StepDatos({ datos, onNext }) {
   const [touched, setTouched] = useState({});
 
   const onlyDigits = (value) => value.replace(/\D/g, "");
+  const onlyLetters = (value) => value.replace(/[0-9]/g, "");
 
   const validate = (f) => {
     const e = {};
-    if (!f.nombre.trim()) e.nombre = "El nombre es obligatorio";
-    if (!f.cedula.trim()) e.cedula = "La cédula es obligatoria";
+    if (!f.nombre.trim()) {
+      e.nombre = "El nombre es obligatorio";
+    } else if (/\d/.test(f.nombre)) {
+      e.nombre = "El nombre no debe contener números";
+    }
+    if (!f.cedula.trim()) {
+      e.cedula = "La cédula es obligatoria";
+    } else if (!/^\d{10}$/.test(f.cedula)) {
+      e.cedula = "La cédula debe tener exactamente 10 dígitos";
+    }
     if (!f.telefono.trim()) {
       e.telefono = "El teléfono es obligatorio";
     } else if (!/^\d{10}$/.test(f.telefono)) {
@@ -31,14 +40,22 @@ export default function StepDatos({ datos, onNext }) {
     ) {
       e.correo = "Correo no válido";
     }
-    if (!f.factura.trim()) e.factura = "El número de factura es obligatorio";
+    if (!f.factura.trim()) {
+      e.factura = "El número de factura es obligatorio";
+    } else if (!/^FFE/i.test(f.factura)) {
+      e.factura = "La factura debe comenzar con FFE";
+    }
     return e;
   };
 
   const handleChange = (key, val) => {
     const next = {
       ...form,
-      [key]: key === "telefono" || key === "cedula" ? onlyDigits(val) : val,
+      [key]: key === "telefono" || key === "cedula"
+        ? onlyDigits(val)
+        : key === "nombre"
+          ? onlyLetters(val)
+          : val,
     };
     setForm(next);
     if (touched[key]) setErrors(validate(next));
@@ -80,7 +97,7 @@ export default function StepDatos({ datos, onNext }) {
               value={form[key]}
               placeholder={placeholder}
               inputMode={key === "telefono" || key === "cedula" ? "numeric" : undefined}
-              maxLength={key === "telefono" ? 10 : undefined}
+              maxLength={key === "telefono" || key === "cedula" ? 10 : undefined}
               onChange={(e) => handleChange(key, e.target.value)}
               onBlur={() => handleBlur(key)}
               className={styles.input}
