@@ -3,11 +3,28 @@ import styles from "./StepMarcadores.module.css";
 
 // Lista de selecciones del Mundial 2026
 const EQUIPOS = [
-  "Argentina","Brasil","Francia","España","Alemania","Inglaterra","Portugal",
-  "Países Bajos","Bélgica","Uruguay","Colombia","México","Estados Unidos",
-  "Canadá","Marruecos","Senegal","Japón","Corea del Sur","Australia","Croacia",
-  "Suiza","Ecuador","Qatar","Arabia Saudita","Ghana","Camerún",
-  "Túnez","Dinamarca",
+  "Canadá",
+  "Marruecos",
+  "Paraguay",
+  "Francia",
+  "Brasil",
+  "Noruega",
+  "México",
+  "Inglaterra",
+  "Estados Unidos",
+  "Bélgica",
+  "España",
+  "Austria",
+  "Portugal",
+  "Croacia",
+  "Suiza",
+  "Argelia",
+  "Australia",
+  "Egipto",
+  "Argentina",
+  "Cabo Verde",
+  "Colombia",
+  "Ghana",
 ];
 
 function MatchCard({ label, partido, onChange, emoji, options = EQUIPOS }) {
