@@ -115,9 +115,7 @@ export default function StepConfirmacion({ data, onReset }) {
         ctx.fillText(partido.equipo2, W/2 + 44, y+38);
       };
 
-      drawMatch("⚽ Semifinal 1", data.semifinal1, 205);
-      drawMatch("⚽ Semifinal 2", data.semifinal2, 265);
-      drawMatch("🏆 Gran Final",  data.final,      325);
+      drawMatch("🏆 Gran Final",  data.final,      260);
 
       // ── Footer ───────────────────────────────────────────────────────────
       ctx.font = "12px 'Rajdhani', Arial";

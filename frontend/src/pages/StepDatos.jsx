@@ -6,7 +6,7 @@ const FIELDS = [
   { key: "cedula", label: "Cédula", type: "text", placeholder: "Ej: 1020304050", icon: "🪪" },
   { key: "telefono", label: "Teléfono", type: "tel", placeholder: "Ej: 3001234567", icon: "📱" },
   { key: "correo", label: "Correo electrónico", type: "email", placeholder: "Ej: carlos@mail.com", icon: "✉️" },
-  { key: "factura", label: "Número de factura", type: "text", placeholder: "Ej: FAC-2024-001", icon: "🧾" },
+  { key: "factura", label: "Número de factura", type: "text", placeholder: "Ej: FFE-001, TFE-2024, SFE-100", icon: "🧾" },
 ];
 
 export default function StepDatos({ datos, onNext }) {
@@ -26,8 +26,8 @@ export default function StepDatos({ datos, onNext }) {
     }
     if (!f.cedula.trim()) {
       e.cedula = "La cédula es obligatoria";
-    } else if (!/^\d{10}$/.test(f.cedula)) {
-      e.cedula = "La cédula debe tener exactamente 10 dígitos";
+    } else if (!/^\d{6,}$/.test(f.cedula)) {
+      e.cedula = "La cédula debe tener más de 5 dígitos";
     }
     if (!f.telefono.trim()) {
       e.telefono = "El teléfono es obligatorio";
@@ -42,8 +42,9 @@ export default function StepDatos({ datos, onNext }) {
     }
     if (!f.factura.trim()) {
       e.factura = "El número de factura es obligatorio";
-    } else if (!/^FFE/i.test(f.factura)) {
-      e.factura = "La factura debe comenzar con FFE";
+    } else if (!/^(FFE|RFE|TFE|ZFE|MFE|SFE)/i.test(f.factura)) {
+      e.factura = "La factura debe comenzar con FFE, RFE, TFE, ZFE, MFE o SFE"
+      ;
     }
     return e;
   };
@@ -96,8 +97,8 @@ export default function StepDatos({ datos, onNext }) {
               type={type}
               value={form[key]}
               placeholder={placeholder}
-              inputMode={key === "telefono" || key === "cedula" ? "numeric" : undefined}
-              maxLength={key === "telefono" || key === "cedula" ? 10 : undefined}
+              inputMode={key === "telefono" ? "numeric" : key === "cedula" ? "numeric" : undefined}
+              maxLength={key === "telefono" ? 10 : key === "cedula" ? 20 : undefined}
               onChange={(e) => handleChange(key, e.target.value)}
               onBlur={() => handleBlur(key)}
               className={styles.input}
