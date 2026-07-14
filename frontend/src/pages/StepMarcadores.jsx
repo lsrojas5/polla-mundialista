@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./StepMarcadores.module.css";
 
 // Lista de selecciones del Mundial 2026
@@ -78,37 +78,6 @@ export default function StepMarcadores({ marcadores, onBack, onSubmit }) {
   const [form, setForm] = useState(marcadores);
   const [loading, setLoading] = useState(false);
 
-  const finalOptions = Array.from(
-    new Set([
-      form.semifinal1.equipo1,
-      form.semifinal1.equipo2,
-      form.semifinal2.equipo1,
-      form.semifinal2.equipo2,
-    ])
-  );
-
-  useEffect(() => {
-    if (finalOptions.length < 2) return;
-
-    setForm((current) => {
-      const allowed = finalOptions;
-      const final = current.final;
-
-      if (allowed.includes(final.equipo1) && allowed.includes(final.equipo2)) {
-        return current;
-      }
-
-      return {
-        ...current,
-        final: {
-          ...final,
-          equipo1: allowed[0],
-          equipo2: allowed[1] ?? allowed[0],
-        },
-      };
-    });
-  }, [finalOptions]);
-
   const update = (partido, key, val) =>
     setForm((f) => ({ ...f, [partido]: { ...f[partido], [key]: val } }));
 
@@ -127,27 +96,17 @@ export default function StepMarcadores({ marcadores, onBack, onSubmit }) {
       </div>
 
       <div className={styles.matches}>
-        <p className={styles.sectionTitle}>⚔️ Semifinales</p>
-        <MatchCard
-          label="Semifinal 1"
-          emoji="🥈"
-          partido={form.semifinal1}
-          onChange={(k, v) => update("semifinal1", k, v)}
-        />
-        <MatchCard
-          label="Semifinal 2"
-          emoji="🥈"
-          partido={form.semifinal2}
-          onChange={(k, v) => update("semifinal2", k, v)}
-        />
+        <div className={styles.heroSection}>
+          <p className={styles.sectionTitle}>🏆 Gran Final</p>
+          <p className={styles.sectionHint}>Elige los dos equipos finalistas y predice el marcador.</p>
+        </div>
 
-        <p className={styles.sectionTitle} style={{ marginTop: "1.5rem" }}>🏆 Gran Final</p>
         <MatchCard
           label="FINAL"
           emoji="🏆"
           partido={form.final}
           onChange={(k, v) => update("final", k, v)}
-          options={finalOptions.length > 0 ? finalOptions : EQUIPOS}
+          options={EQUIPOS}
         />
       </div>
 

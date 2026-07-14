@@ -1,12 +1,11 @@
 .header {
   background: linear-gradient(135deg, #071510 0%, #0a3d22 100%);
   border-bottom: 2px solid var(--oro);
-  padding: 1.5rem 2rem;
+  padding: 1rem 0 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  gap: 1.2rem;
   width: 100%;
   overflow: hidden;
   box-sizing: border-box;
@@ -14,10 +13,11 @@
 
 /* TOP BAR */
 
-.topBar {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
+.topBar{
+    width:100%;
+    max-width:1800px;
+    padding:0 28px;
+    box-sizing:border-box;
 }
 
 /* BOTON ADMIN */
@@ -66,40 +66,29 @@
   text-align: center;
 }
 
-/* TITULO */
+/* BANNER */
 
-.title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 4rem);
-  letter-spacing: 3px;
-  color: var(--oro);
-  line-height: 1.1;
-  text-align: center;
-  margin: 0;
-  max-width: 950px;
+.banner{
+    width:100%;
+    max-width:1800px;
+    padding:0 28px;
+    margin:0 auto;
+    box-sizing:border-box;
 }
 
-/* LOGO */
+.bannerImage{
+    width:100%;
+    max-width:none;
+    height:auto;
+    display:block;
 
-.logoBottom {
-  width: 100px;
-  max-width: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 0 14px rgba(255,255,255,0.25));
-  margin-top: -5px;
-  margin-bottom: 0.2rem;
-}
+    border-radius:22px;
 
-/* SUBTITULO */
+    object-fit:contain;
 
-.sub {
-  font-size: 0.9rem;
-  color: var(--verde-luz);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  font-weight: 600;
-  text-align: center;
-  margin: 0;
+    border:1px solid rgba(245,197,24,.18);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.45);
 }
 
 /* STEPS */
@@ -178,32 +167,52 @@
 
 /* TABLET */
 
-@media (max-width: 768px) {
+@media (max-width:900px){
 
-  .header {
-    padding: 1rem;
-  }
+    .header{
+        padding:1rem;
+    }
 
-  .title {
-    font-size: 2.3rem;
-    letter-spacing: 2px;
-  }
+    .steps{
+        gap:0.3rem;
+    }
 
-  .sub {
-    font-size: 0.8rem;
-  }
+    .line{
+        width:20px;
+    }
 
-  .steps {
-    gap: 0.3rem;
-  }
+    .banner{
+        padding:0 16px;
+    }
 
-  .line {
-    width: 20px;
-  }
+    .topBar{
+        padding:0 16px;
+    }
 
-  .logoBottom {
-    width: 80px;
-  }
+}
+
+/* MOBILE */
+
+@media (max-width:600px){
+
+    .banner{
+        padding:0;
+    }
+
+    .bannerImage{
+        width:100%;
+        height:auto;
+        border-radius:0;
+    }
+
+    .label{ display:none; }
+
+    .line{ width:14px; }
+
+    .circle{ width:28px; height:28px; font-size:0.9rem; }
+
+    .adminButton{ width:34px; height:34px; font-size:1rem; }
+
 }
 
 /* MOBILE */

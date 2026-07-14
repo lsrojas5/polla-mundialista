@@ -1,5 +1,5 @@
 import styles from "./Header.module.css";
-import logoAgsm from "../assets/logo-agsm.png";
+import banner from "../assets/banner-polla.jpg";
 
 const STEPS = ["Tus Datos", "Pronósticos", "¡Listo!"];
 
@@ -23,21 +23,13 @@ export default function Header({ step, onAdminClick }) {
       </div>
 
       {/* HEADER PRINCIPAL */}
-      <div className={styles.brand}>
-
-        <h1 className={styles.title}>
-          ¡Polla Mundialista AGSM!
-        </h1>
+      <div className={styles.banner}>
 
         <img
-          src={logoAgsm}
-          alt="Logo AGSM"
-          className={styles.logoBottom}
+          src={banner}
+          alt="Polla Mundialista"
+          className={styles.bannerImage}
         />
-
-        <p className={styles.sub}>
-          Ingresa tu pronóstico y cultiva la victoria 🌱
-        </p>
 
       </div>
 
