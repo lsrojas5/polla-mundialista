@@ -26,8 +26,8 @@ export default function StepDatos({ datos, onNext }) {
     }
     if (!f.cedula.trim()) {
       e.cedula = "La cédula es obligatoria";
-    } else if (!/^\d{6,}$/.test(f.cedula)) {
-      e.cedula = "La cédula debe tener más de 5 dígitos";
+    } else if (!/^\d{6,10}$/.test(f.cedula)) {
+      e.cedula = "La cédula debe tener entre 6 y 10 dígitos";
     }
     if (!f.telefono.trim()) {
       e.telefono = "El teléfono es obligatorio";
@@ -98,7 +98,7 @@ export default function StepDatos({ datos, onNext }) {
               value={form[key]}
               placeholder={placeholder}
               inputMode={key === "telefono" ? "numeric" : key === "cedula" ? "numeric" : undefined}
-              maxLength={key === "telefono" ? 10 : key === "cedula" ? 20 : undefined}
+              maxLength={key === "telefono" ? 10 : key === "cedula" ? 10 : undefined}
               onChange={(e) => handleChange(key, e.target.value)}
               onBlur={() => handleBlur(key)}
               className={styles.input}

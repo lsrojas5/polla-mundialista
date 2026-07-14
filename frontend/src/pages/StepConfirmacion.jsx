@@ -83,39 +83,41 @@ export default function StepConfirmacion({ data, onReset }) {
 
       // ── Matches ──────────────────────────────────────────────────────────
       const drawMatch = (label, partido, y) => {
+        const boxHeight = 92;
+
         // Box
         ctx.fillStyle = "rgba(255,255,255,0.05)";
-        roundRect(ctx, 30, y, W-60, 52, 8);
+        roundRect(ctx, 30, y, W-60, boxHeight, 12);
         ctx.fill();
-        ctx.strokeStyle = "rgba(245,197,24,0.2)";
-        ctx.lineWidth = 1;
-        roundRect(ctx, 30, y, W-60, 52, 8);
+        ctx.strokeStyle = "rgba(245,197,24,0.25)";
+        ctx.lineWidth = 1.5;
+        roundRect(ctx, 30, y, W-60, boxHeight, 12);
         ctx.stroke();
 
         // Label
-        ctx.font = "11px 'Rajdhani', Arial";
-        ctx.fillStyle = "rgba(245,197,24,0.8)";
-        ctx.textAlign = "left";
-        ctx.fillText(label.toUpperCase(), 44, y+16);
+        ctx.font = "bold 18px 'Bebas Neue', Arial";
+        ctx.fillStyle = "#f5c518";
+        ctx.textAlign = "center";
+        ctx.fillText(label.toUpperCase(), W / 2, y + 26);
 
         // Teams + score
         ctx.font = "bold 16px 'Rajdhani', Arial";
-        ctx.fillStyle = "#f9f6ef";
+        ctx.fillStyle = "rgba(249,246,239,0.9)";
         ctx.textAlign = "right";
-        ctx.fillText(partido.equipo1, W/2 - 44, y+38);
+        ctx.fillText(partido.equipo1, W / 2 - 36, y + 62);
 
         ctx.textAlign = "center";
-        ctx.font = "bold 22px 'Bebas Neue', Arial";
+        ctx.font = "bold 28px 'Bebas Neue', Arial";
         ctx.fillStyle = "#f5c518";
-        ctx.fillText(`${partido.goles1}  -  ${partido.goles2}`, W/2, y+40);
+        ctx.fillText(`${partido.goles1}  -  ${partido.goles2}`, W / 2, y + 64);
 
         ctx.textAlign = "left";
         ctx.font = "bold 16px 'Rajdhani', Arial";
-        ctx.fillStyle = "#f9f6ef";
-        ctx.fillText(partido.equipo2, W/2 + 44, y+38);
+        ctx.fillStyle = "rgba(249,246,239,0.9)";
+        ctx.fillText(partido.equipo2, W / 2 + 36, y + 62);
       };
 
-      drawMatch("🏆 Gran Final",  data.final,      260);
+      drawMatch("🏆 Gran Final",  data.final,      240);
 
       // ── Footer ───────────────────────────────────────────────────────────
       ctx.font = "12px 'Rajdhani', Arial";
