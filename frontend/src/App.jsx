@@ -78,6 +78,12 @@ export default function App() {
 
     try {
 
+      if (!API_URL) {
+        console.error("VITE_API_URL no está configurada. API_URL está vacío.");
+        alert("Error al guardar: no hay URL de API configurada. Añade VITE_API_URL en .env o inicia el backend en http://localhost:4000");
+        return;
+      }
+
       const res = await fetch(
         `${API_URL}/api/pronosticos`,
         {
@@ -117,9 +123,13 @@ export default function App() {
 
       console.error(err);
 
-      alert(
-        "Error al guardar: " + err.message
-      );
+      if (err.message === "Failed to fetch") {
+        alert("Error al guardar: no se pudo conectar con el servidor. Asegura que el backend esté corriendo y que VITE_API_URL apunte a él.");
+      } else {
+        alert(
+          "Error al guardar: " + err.message
+        );
+      }
 
     }
 
