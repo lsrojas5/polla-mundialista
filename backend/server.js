@@ -57,6 +57,24 @@ const Pronostico = mongoose.model("Pronostico", pronosticoSchema);
 
 // ── Routes ──────────────────────────────────────────────────────────────────
 
+app.get("/api/pronosticos/check/:factura", async (req, res) => {
+  try {
+    const factura = req.params.factura.trim().toUpperCase();
+    const existeFactura = await Pronostico.findOne({ factura });
+
+    res.json({
+      success: true,
+      exists: Boolean(existeFactura),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({
+      success: false,
+      error: err.message,
+    });
+  }
+});
+
 // POST  /api/pronosticos  – guardar pronóstico completo
 app.post("/api/pronosticos", async (req, res) => {
 

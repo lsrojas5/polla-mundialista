@@ -54,8 +54,10 @@ export default function App() {
 
   const [adminLogged, setAdminLogged] =
     useState(false);
-  // API URL Railway
-  const API_URL = import.meta.env.VITE_API_URL || "";
+  // API URL local por defecto en desarrollo; en producción se usa VITE_API_URL si existe
+  const API_URL =
+    import.meta.env.VITE_API_URL ||
+    (import.meta.env.DEV ? "http://localhost:4000" : "");
 
   // Paso 1 → Paso 2
   const handleDatosNext = (d) => {

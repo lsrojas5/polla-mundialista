@@ -3,28 +3,9 @@ import styles from "./StepMarcadores.module.css";
 
 // Lista de selecciones del Mundial 2026
 const EQUIPOS = [
-  "Canadá",
-  "Marruecos",
-  "Paraguay",
-  "Francia",
-  "Brasil",
-  "Noruega",
-  "México",
   "Inglaterra",
-  "Estados Unidos",
-  "Bélgica",
   "España",
-  "Austria",
-  "Portugal",
-  "Croacia",
-  "Suiza",
-  "Argelia",
-  "Australia",
-  "Egipto",
   "Argentina",
-  "Cabo Verde",
-  "Colombia",
-  "Ghana",
 ];
 
 function MatchCard({ label, partido, onChange, emoji, options = EQUIPOS }) {
@@ -91,7 +72,7 @@ export default function StepMarcadores({ marcadores, onBack, onSubmit }) {
     <div className={styles.card}>
       <div className={styles.cardHeader}>
         <span className={styles.stepBadge}>PASO 2</span>
-        <h2 className={styles.cardTitle}>Tus Pronósticos</h2>
+        <h2 className={styles.cardTitle}>Pronóstico ganador</h2>
         <p className={styles.cardSub}>Selecciona equipos y predice el marcador</p>
       </div>
 
@@ -113,7 +94,7 @@ export default function StepMarcadores({ marcadores, onBack, onSubmit }) {
       <div className={styles.buttons}>
         <button className={styles.btnBack} onClick={onBack}>← Volver</button>
         <button className={styles.btnSubmit} onClick={handleSubmit} disabled={loading}>
-          {loading ? "Enviando..." : "Enviar Pronóstico 🚀"}
+          {loading ? "Enviando..." : "Buena suerte!!! 🚀"}
         </button>
       </div>
     </div>

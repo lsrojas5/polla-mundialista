@@ -9,10 +9,15 @@ const FIELDS = [
   { key: "factura", label: "Número de factura", type: "text", placeholder: "Ej: FFE-001, TFE-2024, SFE-100", icon: "🧾" },
 ];
 
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? "http://localhost:4000" : "");
+
 export default function StepDatos({ datos, onNext }) {
   const [form, setForm] = useState(datos);
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
+  const [checkingFactura, setCheckingFactura] = useState(false);
 
   const onlyDigits = (value) => value.replace(/\D/g, "");
   const onlyLetters = (value) => value.replace(/[0-9]/g, "");
@@ -43,10 +48,36 @@ export default function StepDatos({ datos, onNext }) {
     if (!f.factura.trim()) {
       e.factura = "El número de factura es obligatorio";
     } else if (!/^(FFE|RFE|TFE|ZFE|MFE|SFE)/i.test(f.factura)) {
-      e.factura = "La factura debe comenzar con FFE, RFE, TFE, ZFE, MFE o SFE"
-      ;
+      e.factura = "La factura debe comenzar con FFE, RFE, TFE, ZFE, MFE o SFE";
     }
     return e;
+  };
+
+  const verifyFactura = async (value) => {
+    const factura = value.trim().toUpperCase();
+
+    if (!factura || !/^(FFE|RFE|TFE|ZFE|MFE|SFE)/i.test(factura)) {
+      return null;
+    }
+
+    try {
+      setCheckingFactura(true);
+      const res = await fetch(`${API_URL}/api/pronosticos/check/${encodeURIComponent(factura)}`);
+
+      if (!res.ok) {
+        throw new Error("No se pudo validar la factura");
+      }
+
+      const json = await res.json();
+      return json.success && json.exists
+        ? "Esta factura ya registró un pronóstico"
+        : null;
+    } catch (err) {
+      console.error(err);
+      return "No se pudo verificar la factura en este momento";
+    } finally {
+      setCheckingFactura(false);
+    }
   };
 
   const handleChange = (key, val) => {
@@ -62,20 +93,49 @@ export default function StepDatos({ datos, onNext }) {
     if (touched[key]) setErrors(validate(next));
   };
 
-  const handleBlur = (key) => {
-    setTouched((t) => ({ ...t, [key]: true }));
-    setErrors(validate(form));
+  const handleBlur = async (key) => {
+    const nextTouched = { ...touched, [key]: true };
+    setTouched(nextTouched);
+
+    const nextErrors = validate(form);
+    setErrors(nextErrors);
+
+    if (key === "factura" && !nextErrors.factura) {
+      const serverError = await verifyFactura(form.factura);
+      if (serverError) {
+        setErrors((prev) => ({ ...prev, factura: serverError }));
+      } else {
+        setErrors((prev) => {
+          const current = { ...prev };
+          delete current.factura;
+          return current;
+        });
+      }
+    }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setTouched({
       nombre: 1,
       cedula: 1,
       telefono: 1,
-      factura: 1
+      factura: 1,
     });
+
     const e = validate(form);
     setErrors(e);
+
+    if (e.factura) {
+      return;
+    }
+
+    const serverError = await verifyFactura(form.factura);
+
+    if (serverError) {
+      setErrors((prev) => ({ ...prev, factura: serverError }));
+      return;
+    }
+
     if (Object.keys(e).length === 0) onNext(form);
   };
 
@@ -108,8 +168,8 @@ export default function StepDatos({ datos, onNext }) {
         ))}
       </div>
 
-      <button className={styles.btn} onClick={handleSubmit}>
-        Continuar a Pronósticos &nbsp;⚽
+      <button className={styles.btn} onClick={handleSubmit} disabled={checkingFactura}>
+        {checkingFactura ? "Validando factura..." : "Continuar a Pronósticos  ⚽"}
       </button>
     </div>
   );
