@@ -98,6 +98,26 @@
 
 .team { display: flex; flex-direction: column; }
 
+.teamName {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1.5px solid rgba(245,197,24,0.45);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.teamNameRight {
+  border-color: rgba(255,255,255,0.25);
+}
+
 .select {
   width: 100%;
   padding: 0.8rem 1rem;

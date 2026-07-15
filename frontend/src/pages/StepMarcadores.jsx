@@ -17,13 +17,7 @@ function MatchCard({ label, partido, onChange, emoji, options = EQUIPOS }) {
       <div className={styles.matchRow}>
         {/* Equipo 1 */}
         <div className={styles.team}>
-          <select
-            value={partido.equipo1}
-            onChange={(e) => onChange("equipo1", e.target.value)}
-            className={styles.select}
-          >
-            {options.map((eq) => <option key={eq}>{eq}</option>)}
-          </select>
+          <div className={styles.teamName}>Argentina</div>
         </div>
 
         {/* Marcador */}
@@ -41,13 +35,7 @@ function MatchCard({ label, partido, onChange, emoji, options = EQUIPOS }) {
 
         {/* Equipo 2 */}
         <div className={styles.team}>
-          <select
-            value={partido.equipo2}
-            onChange={(e) => onChange("equipo2", e.target.value)}
-            className={`${styles.select} ${styles.selectRight}`}
-          >
-            {options.map((eq) => <option key={eq}>{eq}</option>)}
-          </select>
+          <div className={`${styles.teamName} ${styles.teamNameRight}`}>Inglaterra</div>
         </div>
       </div>
     </div>
