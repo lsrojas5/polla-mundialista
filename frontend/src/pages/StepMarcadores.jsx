@@ -3,7 +3,6 @@ import styles from "./StepMarcadores.module.css";
 
 // Lista de selecciones del Mundial 2026
 const EQUIPOS = [
-  "Inglaterra",
   "España",
   "Argentina",
 ];
@@ -73,13 +72,13 @@ export default function StepMarcadores({ marcadores, onBack, onSubmit }) {
       <div className={styles.cardHeader}>
         <span className={styles.stepBadge}>PASO 2</span>
         <h2 className={styles.cardTitle}>Pronóstico ganador</h2>
-        <p className={styles.cardSub}>Selecciona equipos y predice el marcador</p>
+        <p className={styles.cardSub}>Elige tu pronóstico</p>
       </div>
 
       <div className={styles.matches}>
         <div className={styles.heroSection}>
           <p className={styles.sectionTitle}>🏆 Gran Final</p>
-          <p className={styles.sectionHint}>Elige los dos equipos finalistas y predice el marcador.</p>
+          <p className={styles.sectionHint}>Elige tu marcador.</p>
         </div>
 
         <MatchCard
