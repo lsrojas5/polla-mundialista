@@ -95,26 +95,26 @@ export default function StepConfirmacion({ data, onReset }) {
         ctx.stroke();
 
         // Label
-        ctx.font = "bold 18px 'Bebas Neue', Arial";
+        ctx.font = "bold 20px 'Bebas Neue', Arial";
         ctx.fillStyle = "#f5c518";
         ctx.textAlign = "center";
-        ctx.fillText(label.toUpperCase(), W / 2, y + 26);
+        ctx.fillText(label.toUpperCase(), W / 2, y + 28);
 
         // Teams + score
-        ctx.font = "bold 16px 'Rajdhani', Arial";
-        ctx.fillStyle = "rgba(249,246,239,0.9)";
+        ctx.font = "bold 18px 'Rajdhani', Arial";
+        ctx.fillStyle = "rgba(249,246,239,0.95)";
         ctx.textAlign = "right";
-        ctx.fillText(partido.equipo1, W / 2 - 36, y + 62);
+        ctx.fillText(partido.equipo1, W / 2 - 70, y + 64);
 
         ctx.textAlign = "center";
         ctx.font = "bold 28px 'Bebas Neue', Arial";
         ctx.fillStyle = "#f5c518";
-        ctx.fillText(`${partido.goles1}  -  ${partido.goles2}`, W / 2, y + 64);
+        ctx.fillText(`${partido.goles1}  -  ${partido.goles2}`, W / 2, y + 68);
 
         ctx.textAlign = "left";
-        ctx.font = "bold 16px 'Rajdhani', Arial";
-        ctx.fillStyle = "rgba(249,246,239,0.9)";
-        ctx.fillText(partido.equipo2, W / 2 + 36, y + 62);
+        ctx.font = "bold 18px 'Rajdhani', Arial";
+        ctx.fillStyle = "rgba(249,246,239,0.95)";
+        ctx.fillText(partido.equipo2, W / 2 + 70, y + 64);
       };
 
       drawMatch("🏆 Gran Final",  data.final,      240);
